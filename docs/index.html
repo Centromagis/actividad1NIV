@@ -13,7 +13,7 @@
 
 <title> Actividad 1</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -274,7 +274,7 @@ tu elección.</p>
 <p><br/></p>
 <p>En este proceso, se espera que apliques las funciones indicadas para
 obtención de la data, su limpieza y la generación de indicadores
-estadístocos y gráficos que permitan analizar datos relacionados con la
+estadísticos y gráficos que permitan analizar datos relacionados con la
 propagación del Covid-19 en la región que te interese.</p>
 <p><br/></p>
 <p>Una vez completado el análisis, se te solicitará que prepares un
@@ -289,12 +289,12 @@ id="instala-los-siguientes-paquetes-y-actívalos-en-tu-computador-o-equipo-de-tr
 class="section level3">
 <h3><span style="color:#034a94"> <strong>Instala los siguientes paquetes
 y actívalos en tu computador o equipo de trabajo</strong></span></h3>
-<pre class="r"><code>install.packages(&quot;tidyverse&quot;) #  instalación de paquete para manejo de datos
-install.packages(&quot;RSocrata&quot;, dependencies = TRUE)   # instalación de paquete RSocrata lee datos de manera remota
-install.packages(&quot;devtools&quot;)  # instala paquete para descargar paquetes desde github
-devtools::install_github(&quot;dcomtois/summarytools&quot;) # descarga paquete summarytools desde repositorio github
-library(tidyverse)   # libreria util en el manejo de datos
-library(RSocrata)    # llamado de libreria RSocratas</code></pre>
+<pre class="r"><code>install.packages(&quot;tidyverse&quot;) #  Instalación de paquete para manejo de datos
+install.packages(&quot;RSocrata&quot;, dependencies = TRUE)   # Instalación de paquete RSocrata lee datos de manera remota
+install.packages(&quot;devtools&quot;)  # Instala paquete para descargar paquetes desde github
+devtools::install_github(&quot;dcomtois/summarytools&quot;) # Descarga paquete summarytools desde repositorio github
+library(tidyverse)   # Librería útil en el manejo de datos
+library(RSocrata)    # Llamado de librería RSocratas</code></pre>
 <p><br/><br/></p>
 </div>
 </div>
@@ -303,8 +303,8 @@ library(RSocrata)    # llamado de libreria RSocratas</code></pre>
 <div id="descarga-la-data" class="section level3">
 <h3><span style="color:#034a94"> <strong>Descarga la data
 </strong></span></h3>
-<pre class="r"><code>token &lt;- &quot;zxMsD6eXc0zlEMryRGW87Hwrz&quot;  # token
-Colombia &lt;- read.socrata(&quot;https://www.datos.gov.co/resource/gt2j-8ykr.json&quot;, app_token = token) # lectura de manera remota </code></pre>
+<pre class="r"><code>token &lt;- &quot;zxMsD6eXc0zlEMryRGW87Hwrz&quot;  # Token
+Colombia &lt;- read.socrata(&quot;https://www.datos.gov.co/resource/gt2j-8ykr.json&quot;, app_token = token) # Lectura de manera remota </code></pre>
 </div>
 <div id="nota" class="section level3 content-box-gray">
 <h3><strong>Nota</strong></h3>
@@ -322,13 +322,13 @@ table(Colombia$sexo)
 table(Colombia$ubicacion)
 
 
-Colombia$edad=as.integer(Colombia$edad)  # convertir en entero la variable edad
-Colombia$sexo=str_to_lower(Colombia$sexo) # pasar a minúsculas todos valores de la variable sexo
-Colombia$estado=str_to_lower(Colombia$estado) # pasar a minúsculas todos lo valores de la variable estado
-Colombia$estado[Colombia$estado==&quot;n/a&quot;]=NA   # cambiar el valor  n/a por NA - valores faltantes
-Colombia$recuperado=str_to_lower(Colombia$recuperado) # pasar a minúsculas todos los valores de la variable recuperado
+Colombia$edad=as.integer(Colombia$edad)  # Convertir en entero la variable edad
+Colombia$sexo=str_to_lower(Colombia$sexo) # Pasar a minúsculas todos valores de la variable sexo
+Colombia$estado=str_to_lower(Colombia$estado) # Pasar a minúsculas todos lo valores de la variable estado
+Colombia$estado[Colombia$estado==&quot;n/a&quot;]=NA   # Cambiar el valor  n/a por NA - valores faltantes
+Colombia$recuperado=str_to_lower(Colombia$recuperado) # Pasar a minúsculas todos los valores de la variable recuperado
 Colombia$recuperado[Colombia$recuperado==&quot;n/a&quot;]=NA 
-Colombia$ubicacion=str_to_lower(Colombia$ubicacion) # pasar a minúsculas todos los valores de la variable ubicación
+Colombia$ubicacion=str_to_lower(Colombia$ubicacion) # Pasar a minúsculas todos los valores de la variable ubicación
 Colombia$ubicacion[Colombia$ubicacion==&quot;n/a&quot;]=NA </code></pre>
 <p><br/><br/></p>
 </div>
@@ -338,12 +338,12 @@ Colombia$ubicacion[Colombia$ubicacion==&quot;n/a&quot;]=NA </code></pre>
 <div id="selecciona-una-data-de-tu-interés" class="section level3">
 <h3><span style="color:#034a94"> <strong>Selecciona una data de tu
 interés</strong></span></h3>
-<pre class="r"><code>Colombia22=subset(Colombia, Colombia$fecha_reporte_web&gt;=&quot;2022-01-01&quot;) # data del 2022
-Colombia21=subset(Colombia, Colombia$fecha_reporte_web&gt;=&quot;2021-01-01&quot; &amp; Colombia$fecha_reporte_web&lt;&quot;2022-01-01&quot;) # data de 2021
-Colombia20=subset(Colombia, Colombia$fecha_reporte_web&gt;=&quot;2020-01-01&quot; &amp; Colombia$fecha_reporte_web&lt;&quot;2021-01-01&quot;) # data de 2020
-Colombia22_11=subset(Colombia, Colombia$fecha_reporte_web&gt;=&quot;2022-11-01&quot;) # data desde  nov-01-2022 
-Valle22_11=subset(Colombia22_11, departamento==&quot;76&quot;) # data del Valle del Cauca desde nov-01-2022
-Cali22_11= subset(Colombia22_11, ciudad_municipio_nom==&quot;CALI&quot;) # data de Cali desde nov-01-2022</code></pre>
+<pre class="r"><code>Colombia22=subset(Colombia, Colombia$fecha_reporte_web&gt;=&quot;2022-01-01&quot;) # Data del 2022
+Colombia21=subset(Colombia, Colombia$fecha_reporte_web&gt;=&quot;2021-01-01&quot; &amp; Colombia$fecha_reporte_web&lt;&quot;2022-01-01&quot;) # Data de 2021
+Colombia20=subset(Colombia, Colombia$fecha_reporte_web&gt;=&quot;2020-01-01&quot; &amp; Colombia$fecha_reporte_web&lt;&quot;2021-01-01&quot;) # Data de 2020
+Colombia22_11=subset(Colombia, Colombia$fecha_reporte_web&gt;=&quot;2022-11-01&quot;) # Data desde  nov-01-2022 
+Valle22_11=subset(Colombia22_11, departamento==&quot;76&quot;) # Data del Valle del Cauca desde nov-01-2022
+Cali22_11= subset(Colombia22_11, ciudad_municipio_nom==&quot;CALI&quot;) # Data de Cali desde nov-01-2022</code></pre>
 <p><br/><br/></p>
 </div>
 </div>
@@ -369,12 +369,12 @@ summarytools::freq(Colombia20$estado, cumul = F)</code></pre>
 <div id="construye-los-indicadores-estadísticos" class="section level3">
 <h3><span style="color:#034a94"> <strong>Construye los indicadores
 estadísticos</strong></span></h3>
-<pre class="r"><code>mean(Colombia22_11$edad, na.rm = TRUE) # media
-median(Colombia22_11$edad)             # mediana
-var(Colombia22_11$edad)                # varianza
-sd(Colombia22_11$edad)                 # desviación estandar
-min(Colombia22_11$edad)                # mínimo
-max(Colombia22_11$edad)                # máximo
+<pre class="r"><code>mean(Colombia22_11$edad, na.rm = TRUE) # Media
+median(Colombia22_11$edad)             # Mediana
+var(Colombia22_11$edad)                # Varianza
+sd(Colombia22_11$edad)                 # Desviación Estandar
+min(Colombia22_11$edad)                # Mínimo
+max(Colombia22_11$edad)                # Máximo
 
 summarytools::descr(Colombia22_11$edad)</code></pre>
 <p><br/><br/></p>
@@ -391,7 +391,7 @@ pie(t1)
 t2=table(Colombia$sexo,Colombia$ubicacion)
 barplot(t2, las=1)
 
-hist(Colombia22_11$edad, las=1, xlab = &quot;edad (años)&quot;, ylab = &quot;frecuencia&quot;, 
+hist(Colombia22_11$edad, las=1, xlab = &quot;Edad (años)&quot;, ylab = &quot;Frecuencia&quot;, 
 main = &quot;Edad de personas contagiadas Covid19 Colombia- Nov 2022&quot; )
 
 boxplot(Colombia$edad, horizontal = TRUE,
@@ -407,7 +407,7 @@ datos</strong></span></h3>
 <p>Finalmente realiza un análisis de los resultados obtenidos. Recuerde
 que para hacerlo debe tener en cuenta los indicadores de posición,
 centro, dispersión y forma. Además ayuda a reforzar el análisis una
-representacón gráfica.</p>
+representación gráfica.</p>
 <p><br/><br/></p>
 </div>
 <div id="nota-1" class="section level3 content-box-gray">
@@ -541,7 +541,7 @@ lineas. Ej.: <code>plot(x,y)</code> .</li>
 </ul>
 <p><br/></p>
 <ul>
-<li><strong>read.socrata</strong> Funcion que se emplea para descargar
+<li><strong>read.socrata</strong> Función que se emplea para descargar
 una base de datos de un repositorio remoto con la autorización de un
 token. Ej.:
 <code>Colombia &lt;- read.socrata("https://www.datos.gov.co/resource/gt2j-8ykr.json", app_token = token)</code>
@@ -588,28 +588,28 @@ conjunto de valores numéricos. Ej.: <code>var(x)</code> .</li>
 <h3><span style="color:#034a94"> <strong>Paquetes
 utilizados</strong></span></h3>
 <p><br/></p>
-<p><strong>dvtools</strong> : paquete de R utilizado en la creación y
+<p><strong>dvtools</strong> : Paquete de R utilizado en la creación y
 gestión de paquetes de R (packages)</p>
 <p><br/></p>
-<p><strong>paqueteNIV</strong> : paquete creado para el curso
+<p><strong>paqueteNIV</strong> : Paquete creado para el curso
 Nivelatorio de Estadística de la Maestría en Ciencia de Datos. Contiene
 funciones, datos y tutoriales.</p>
 <p><br/></p>
-<p><strong>RSocrata</strong> : paquete empleado para descargar datos a
+<p><strong>RSocrata</strong> : Paquete empleado para descargar datos a
 través de una API</p>
 <p><br/></p>
 <p><strong>tidyverse</strong> Es un cojunto de paquetes que funcionan de
 manera armónica, diseñados para ciencia de datos.</p>
 <ul>
-<li><strong>dplyr</strong>v: manipulación de datos</li>
-<li><strong>ggplot2</strong> : visialización de datos</li>
-<li><strong>readr</strong> : importar datos</li>
-<li><strong>tidyr</strong> : ordenar datos</li>
-<li><strong>purrr</strong> : conjunto de herramientas de programación
+<li><strong>dplyr</strong>: Manipulación de datos</li>
+<li><strong>ggplot2</strong> : Visualización de datos</li>
+<li><strong>readr</strong> : Importar datos</li>
+<li><strong>tidyr</strong> : Ordenar datos</li>
+<li><strong>purrr</strong> : Conjunto de herramientas de programación
 funcional</li>
-<li><strong>tibble</strong>: facilita el manejo de datos<br />
+<li><strong>tibble</strong>: Facilita el manejo de datos<br />
 </li>
-<li><strong>magrittr</strong> : facilita la escritura de código (uso de
+<li><strong>magrittr</strong> : Facilita la escritura de código (uso de
 “pipe” %&gt;%)</li>
 </ul>
 </div>
